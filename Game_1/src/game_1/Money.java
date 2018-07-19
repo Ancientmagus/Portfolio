@@ -10,7 +10,7 @@ public class Money implements Runnable{
 		while(true) {
 			money += cashflow;
 			game.setMoney(money);
-			game.setMoneyLabel("Money: $" + money + "(" + cashflow + ")");
+			game.setMoneyLabel(money + "(" + cashflow + ")");
 			
 			System.out.println(money);
 			
