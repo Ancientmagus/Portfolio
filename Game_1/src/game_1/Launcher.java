@@ -9,6 +9,11 @@ public class Launcher {
 		Money money = new Money();
 		Thread moneyThread = new Thread(money);
 		moneyThread.start();
+		
+		Tick tick = new Tick();
+		Thread tickThread = new Thread(tick);
+		tickThread.start();
+		
 	}
 
 }

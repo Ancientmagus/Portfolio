@@ -3,59 +3,72 @@ package game_1;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import java.awt.image.*;
 
 public class Game {
 	static int money = 0;
 	static int level = 1;
-	static int cashflow = 50;
-	static int stars = 3;
+	static int cashflow = 500;
+	static int stars = 1;
+	static int starsLvl2 = 1;
+	static int x = -116;
+	static int currentLvl = 1;
+	static boolean running;
+	static JLabel moneyTitle;
+	static MyDrawPanel drawPanel;
 	String moneyLabel;
 	JFrame theFrame;
 	JPanel mainPanel;
-	static JLabel moneyTitle;
-	private BufferedImage bi = null;
 	BufferedImageLoader loader = new BufferedImageLoader();
+	Thread busThread;
+
 
 	public void buildGUI() {
 
+		//Game Frame
 		theFrame = new JFrame("Game_1");
 		theFrame.getContentPane().setLayout(null);
-
+		
+		//Frame background
 		JLabel background = new JLabel();
-		background.setIcon(new ImageIcon("C:\\Users\\Bruno\\eclipse-workspace\\Game_1\\Images\\GUI_v1.5.png"));
+		background.setIcon(new ImageIcon(getClass().getResource("/images/GUI_v1.5.png")));
 		background.setBounds(0, 0, 630, 630);
-
+		
+		//Main Panel
 		mainPanel = new JPanel();
-		MyDrawPanel drawPanel = new MyDrawPanel();
+		drawPanel = new MyDrawPanel();
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(drawPanel, BorderLayout.CENTER);
 		mainPanel.setBounds(43, 75, 509, 343);
-
+		
+		/*
+		//Money panel
+		moneyTitle = new JLabel(moneyLabel);
+		moneyTitle.setBounds(394, 80, 151, 33);
+		moneyTitle.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 23));
+		*/
+		
+		//Buttons
 		JButton storeBtn = new JButton();
 		storeBtn.addActionListener(new StoreButtonListener());
 		storeBtn.setBounds(37, 448, 150, 150);
-		storeBtn.setIcon(new ImageIcon("C:\\Users\\Bruno\\eclipse-workspace\\Game_1\\Images\\ShopBtn_unpressed.png"));
-		storeBtn.setPressedIcon(new ImageIcon("C:\\Users\\Bruno\\eclipse-workspace\\Game_1\\Images\\ShopBtn_pressed.png"));
+		storeBtn.setIcon(new ImageIcon(getClass().getResource("/images/ShopBtn_unpressed.png")));
+		storeBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/ShopBtn_pressed.png")));
 		storeBtn.setContentAreaFilled(false);
 		storeBtn.setBorderPainted(false);
 
 		JButton saveBtn = new JButton();
 		saveBtn.addActionListener(new SaveButtonListener());
 		saveBtn.setBounds(227, 448, 150, 150);
-		saveBtn.setIcon(new ImageIcon("C:\\Users\\Bruno\\eclipse-workspace\\Game_1\\Images\\SaveBtn_unpressed.png"));
-		saveBtn.setPressedIcon(
-				new ImageIcon("C:\\Users\\Bruno\\eclipse-workspace\\Game_1\\Images\\SaveBtn_pressed.png"));
+		saveBtn.setIcon(new ImageIcon(getClass().getResource("/images/SaveBtn_unpressed.png")));
+		saveBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/SaveBtn_pressed.png")));
 		saveBtn.setContentAreaFilled(false);
 		saveBtn.setBorderPainted(false);
 
 		JButton travelBtn = new JButton();
 		travelBtn.addActionListener(new TravelButtonListener());
 		travelBtn.setBounds(414, 448, 150, 150);
-		travelBtn
-				.setIcon(new ImageIcon("C:\\Users\\Bruno\\eclipse-workspace\\Game_1\\Images\\TravelBtn_unpressed.png"));
-		travelBtn.setPressedIcon(
-				new ImageIcon("C:\\Users\\Bruno\\eclipse-workspace\\Game_1\\Images\\TravelBtn_pressed.png"));
+		travelBtn.setIcon(new ImageIcon(getClass().getResource("/images/TravelBtn_unpressed.png")));
+		travelBtn.setPressedIcon(new ImageIcon(getClass().getResource("/images/TravelBtn_pressed.png")));
 		travelBtn.setContentAreaFilled(false);
 		travelBtn.setBorderPainted(false);
 
@@ -65,7 +78,8 @@ public class Game {
 		closeBtn.setOpaque(false);
 		closeBtn.setContentAreaFilled(false);
 		closeBtn.setBorderPainted(false);
-
+		
+		//Frame construction
 		theFrame.setResizable(false);
 		theFrame.setBounds(10, 10, 630, 630);
 		theFrame.setUndecorated(true);
@@ -76,80 +90,12 @@ public class Game {
 		theFrame.getContentPane().add(saveBtn);
 		theFrame.getContentPane().add(storeBtn);
 		theFrame.getContentPane().add(closeBtn);
+		//theFrame.getContentPane().add(moneyTitle);
 		theFrame.getContentPane().add(mainPanel);
 		theFrame.getContentPane().add(background);
 		theFrame.setVisible(true);
-
-		/*
-		 * // frame and mainPanel theFrame = new JFrame("GAME_1"); //****VER ISTO
-		 * theFrame.setLayout(new BorderLayout()); Levels levels = new Levels(1); Image
-		 * nivel1 = levels.le1(); JLabel backgroundGUI = new JLabel(new
-		 * ImageIcon(nivel1)); theFrame.add(backgroundGUI, BorderLayout.CENTER);
-		 * backgroundGUI.setLayout(new BorderLayout());
-		 * 
-		 * 
-		 * BorderLayout layout = new BorderLayout(); JPanel mainPanel = new
-		 * JPanel(layout); mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10,
-		 * 10, 10));
-		 * 
-		 * // bottom Panel JPanel bottomPanel = new JPanel(new BorderLayout());
-		 * 
-		 * // buttons Panel JPanel buttonPanel = new JPanel(new GridLayout(1, 3, 10,
-		 * 10)); buttonPanel.setPreferredSize(new Dimension(800, 100));
-		 * buttonPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		 * 
-		 * JButton storeBtn = new JButton("STORE"); storeBtn.addActionListener(new
-		 * StoreButtonListener()); buttonPanel.add(storeBtn); storeBtn.setFont(new
-		 * Font("Arial", Font.PLAIN, 35));
-		 * 
-		 * JButton investBtn = new JButton("INVEST"); investBtn.addActionListener(new
-		 * InvestButtonListener()); buttonPanel.add(investBtn); investBtn.setFont(new
-		 * Font("Arial", Font.PLAIN, 35));
-		 * 
-		 * JButton travelBtn = new JButton("TRAVEL"); travelBtn.addActionListener(new
-		 * TravelButtonListener()); buttonPanel.add(travelBtn); travelBtn.setFont(new
-		 * Font("Arial", Font.PLAIN, 35));
-		 * 
-		 * //TO MAKE IT TRANSPARENT:
-		 * 
-		 * travelBtn.setOpaque(false); travelBtn.setContentAreaFilled(false);
-		 * travelBtn.setBorderPainted(false);
-		 * 
-		 * 
-		 * // Money and Stars Panel JPanel scorePanel = new JPanel(new GridLayout(1,
-		 * 2)); scorePanel.setMinimumSize(new Dimension(600, 50));
-		 * scorePanel.setMaximumSize(new Dimension(600, 50));
-		 * scorePanel.setPreferredSize(new Dimension(600, 50));
-		 * 
-		 * moneyTitle = new JLabel(moneyLabel);
-		 * moneyTitle.setBorder(BorderFactory.createLoweredSoftBevelBorder());
-		 * 
-		 * bi = loader.loadImage(
-		 * "C:\\Users\\Bruno\\eclipse-workspace\\Game_1\\Images\\stars.jpg"); Image dim
-		 * = bi.getScaledInstance(100, 18, Image.SCALE_SMOOTH); ImageIcon stars = new
-		 * ImageIcon(dim); JLabel starsLabel = new JLabel("QUALITY: ", stars,
-		 * JLabel.LEFT); starsLabel.setIconTextGap(-200);
-		 * starsLabel.setBorder(BorderFactory.createLoweredSoftBevelBorder());
-		 * 
-		 * // Game Graphics Panel MyDrawPanel drawPanel = new MyDrawPanel();
-		 * 
-		 * // Main Panel Setting
-		 * 
-		 * scorePanel.add(starsLabel); scorePanel.add(moneyTitle);
-		 * mainPanel.add(bottomPanel, BorderLayout.SOUTH); mainPanel.add(drawPanel,
-		 * BorderLayout.CENTER); bottomPanel.add(buttonPanel, BorderLayout.CENTER);
-		 * bottomPanel.add(scorePanel, BorderLayout.NORTH);
-		 * 
-		 * theFrame.getContentPane().add(mainPanel);
-		 * 
-		 * // closing method theFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		 * 
-		 * // Size and setting to visible theFrame.setBounds(50, 50, 600, 600);
-		 * theFrame.setUndecorated(true); theFrame.setResizable(false);
-		 * theFrame.setLocationRelativeTo(null); theFrame.setVisible(true);
-		 * 
-		 */
-
+		
+		running = true;
 	}
 
 	class MyDrawPanel extends JPanel {
@@ -158,12 +104,27 @@ public class Game {
 		public void paint(Graphics g) {
 
 			Levels levels = new Levels();
-			Image location = levels.locationGen(level, stars);
+			Image location = levels.locationGen(level, stars, starsLvl2);
 			g.drawImage(location, 0, 0, this.getWidth(), this.getHeight(), this);
-
-			Image starsImg = levels.starsImage(stars);
+			Image starsImg = levels.starsImage(level, stars, starsLvl2);
 			g.drawImage(starsImg, 0, 0, 188, 41, this);
-
+			
+			//Bus Animation
+			Image busImg = loader.loadImage("/images/Bus.png");
+			Image tireImg = loader.loadImage("/images/Tire.png");
+			g.drawImage(busImg, x, 283, 116, 51, this);
+			
+			
+			//System.out.println(x);
+			
+			//money text
+			Graphics2D g2d = (Graphics2D)g;
+			g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+			String moneytext = (money + "(" + cashflow + ")");
+			g2d.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 23));
+			g2d.setColor(Color.BLACK);
+			g2d.drawString(moneytext, 350, 30);
+			
 		}
 	}
 
@@ -177,6 +138,26 @@ public class Game {
 
 	public int getStars() {
 		return stars;
+	}
+	
+	void setStars(int num) {
+		stars = num;
+	}
+	
+	public int getStarsLvl2() {
+		return starsLvl2;
+	}
+	
+	void setStarsLvl2(int num) {
+		starsLvl2 = num;
+	}
+	
+	public int getCurrentLvl() {
+		return currentLvl;
+	}
+	
+	void setCurrentLvl(int num) {
+		currentLvl = num;
 	}
 
 	void changeMoney(int gold) {
@@ -192,16 +173,41 @@ public class Game {
 	}
 
 	void setMoney(int num) {
-		money += num;
+		money = num;
 	}
 
 	void setMoneyLabel(String label) {
 		moneyLabel = label;
-		// moneyTitle.setText(label);
 	}
+	
+	/*
+	void setMoneyTitle() {
+		moneyTitle.setText(money + "(" + cashflow + ")");
+	}
+	*/
 
 	public int getCashflow() {
 		return cashflow;
+	}
+	
+	public int getX() {
+		return x;
+	}
+	
+	void setX (int val) {
+		x = val;
+	}
+	
+	void repaintDrawPanel () {
+		drawPanel.repaint();
+	}
+	
+	public boolean getRunning() {
+		return running;
+	}
+	
+	void setRunning(boolean runin) {
+		running = runin;
 	}
 
 	public class StoreButtonListener implements ActionListener {
@@ -212,8 +218,10 @@ public class Game {
 				e.printStackTrace();
 			}
 			Store store = new Store();
+			running = false;
 			theFrame.setVisible(false);
-			store.buildGUI();
+			store.buildGUI(level, stars);
+			theFrame.dispose();
 		}
 	}
 
@@ -227,6 +235,7 @@ public class Game {
 			Invest invest = new Invest();
 			theFrame.setVisible(false);
 			invest.buildGUI();
+			theFrame.dispose();
 		}
 	}
 
@@ -240,14 +249,20 @@ public class Game {
 			Travel travel = new Travel();
 			theFrame.setVisible(false);
 			travel.buildGUI();
+			theFrame.dispose();
 		}
 	}
 
 	public class CloseButtonListener implements ActionListener {
 		public void actionPerformed(ActionEvent a) {
-			System.exit(0);
-			theFrame.dispose();
+	        int confirm = JOptionPane.showOptionDialog(
+		             null, "Are You Sure to Close Application?", 
+		             "Exit Confirmation", JOptionPane.YES_NO_OPTION, 
+		             JOptionPane.QUESTION_MESSAGE, null, null, null);
+		        if (confirm == 0) {
+					System.exit(0);
+					theFrame.dispose();
+		        }
+		    }
 		}
-	}
-
 }
