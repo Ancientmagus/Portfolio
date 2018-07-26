@@ -29,4 +29,4 @@ In this Project I used:
   - Animations;
   - etc...
   
-[![image](https://github.com/Ancientmagus/repository/Portfolio/Game_1/sample_1.png|alt=sample_image_1)]
+[![image](Portfolio/Game_1/sample_1.png)]
