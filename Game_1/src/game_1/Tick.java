@@ -9,8 +9,23 @@ public class Tick implements Runnable {
 		Game game = new Game();
 		running = game.getRunning();
 		BusAnimation bAnim = new BusAnimation();
-		
+		PeopleAnimation pAnim = new PeopleAnimation();
+		int pAnimNum = 0;
+		int yt = 0;
+
 		while (running) {
+			
+			yt += 1;
+			
+			if (yt == 3) {
+			if (pAnimNum == 3) {
+				pAnimNum = 0;
+			}
+			pAnimNum += 1;
+			game.setPAnimNum(pAnimNum);
+			pAnim.go();
+			yt = 0;
+			}		
 			
 			int lvl = game.getLevel();
 			int strs = game.getStars();
@@ -19,19 +34,21 @@ public class Tick implements Runnable {
 					System.out.println("paused");
 					try {
 						pauseLock.wait();
-					} catch (InterruptedException ex) {break;}
+					} catch (InterruptedException ex) {
+						break;
+					}
 				}
 			}
-			
-			//animations
-			if ((lvl == 1 && strs >2) || (lvl == 2)) {
-					bAnim.go();
+
+			// animations
+			if ((lvl == 1 && strs > 3) || (lvl == 2)) {
+				bAnim.go();
 			}
-			
-			//drawpanel update
+
+			// drawpanel update
 			game.repaintDrawPanel();
-			
-			//tick speed
+
+			// tick speed
 			try {
 				Thread.sleep(50);
 			} catch (InterruptedException e) {
@@ -39,7 +56,7 @@ public class Tick implements Runnable {
 			}
 		}
 	}
-	
+
 	public void resume() {
 		synchronized (pauseLock) {
 			pauseLock.notifyAll();

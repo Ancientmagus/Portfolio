@@ -2,6 +2,7 @@ package game_1;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -339,13 +340,16 @@ public class Store {
 
 		JButton yesButton = new JButton("BUY");
 		yesButton.addActionListener(new YesBtnListener());
+		yesButton.setPreferredSize(new Dimension(55, 55));
+		yesButton.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 20));
 
 		JButton noButton = new JButton("Cancel");
 		noButton.addActionListener(new NoBtnListener());
-		noButton.hasFocus();
+		noButton.setPreferredSize(new Dimension(55, 55));
+		noButton.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 20));
 
-		JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 20, 20));
-		buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+		JPanel buttonPanel = new JPanel(new GridLayout(1, 2, 40, 0));
+		buttonPanel.setBorder(BorderFactory.createEmptyBorder(0, 40, 5, 40));
 
 		buttonPanel.add(yesButton);
 		buttonPanel.add(noButton);

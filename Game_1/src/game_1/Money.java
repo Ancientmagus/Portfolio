@@ -12,17 +12,15 @@ public class Money implements Runnable {
 			int cashflow = game.getCashflow();
 			money += cashflow;
 			game.setMoney(money);
-			//game.setMoneyLabel(money + "(" + cashflow + ")");
-			
 			
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-
-			// CONTROL _ DELETE
-			System.out.println(money);
+			
+			System.out.println(game.getStars());
+			System.out.println(game.getStarsLvl2());
 		}
 	}
 	

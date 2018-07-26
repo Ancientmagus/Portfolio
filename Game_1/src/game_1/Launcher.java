@@ -13,7 +13,5 @@ public class Launcher {
 		Tick tick = new Tick();
 		Thread tickThread = new Thread(tick);
 		tickThread.start();
-		
 	}
-
 }
