@@ -18,12 +18,6 @@ public class Money implements Runnable {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			
-			System.out.println(game.getStars());
-			System.out.println(game.getStarsLvl2());
 		}
-	}
-	
-	
-	
+	}	
 }
