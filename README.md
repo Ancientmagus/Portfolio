@@ -4,6 +4,7 @@ A portfolio of sample projects by Bruno Pereira.
 Country: United-Kingdom.
 
 County: Warwickshire.
+
 <li><a href="mailto:brunojbpereira@gmail.com">Email Me</a></li>
 
 ## Motivation and Type of Job I'm Looking For:
@@ -29,4 +30,10 @@ In this Project I used:
   - Animations;
   - etc...
   
-[![image](https://github.com/Ancientmagus/Portfolio/Game_1/sample_1.png)]
+![image](https://github.com/Ancientmagus/Portfolio/blob/master/Game_1/sample_1.png)
+![image](https://github.com/Ancientmagus/Portfolio/blob/master/Game_1/sample_2.png)
+![image](https://github.com/Ancientmagus/Portfolio/blob/master/Game_1/sample_3.png)
+![image](https://github.com/Ancientmagus/Portfolio/blob/master/Game_1/sample_4.png)
+![image](https://github.com/Ancientmagus/Portfolio/blob/master/Game_1/sample_5.png)
+![image](https://github.com/Ancientmagus/Portfolio/blob/master/Game_1/sample_6.png)
+![image](https://github.com/Ancientmagus/Portfolio/blob/master/Game_1/sample_7.png)
